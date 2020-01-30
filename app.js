@@ -1,7 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const expressLayouts = require('express-ejs-layouts');
+const connectDB = require('./db/connectDB');
 
 const app = express();
+connectDB();
 
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
