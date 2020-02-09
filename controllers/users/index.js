@@ -16,11 +16,12 @@ const register = async (req, res) => {
     }
 
     if (errors.length > 0) {
+        console.log(typeof errors)
         res.render('register', {
             errors, name, email, password, password2
         })
     } else {
-
+        res.send('hello');
     }
 }
 module.exports = {
