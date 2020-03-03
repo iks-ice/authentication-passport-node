@@ -1,3 +1,6 @@
+const User = require('../../models/user');
+const bcrypt = require('bcryptjs');
+
 const register = async (req, res) => {
     const {name, email, password, password2} = req.body;
 
@@ -16,12 +19,20 @@ const register = async (req, res) => {
     }
 
     if (errors.length > 0) {
-        console.log(typeof errors)
         res.render('register', {
             errors, name, email, password, password2
         })
     } else {
-        res.send('hello');
+        try {
+            const user = await User.find({email});
+            if (user) {
+                errors.push({msg: 'Email is already registered'})
+                res.render('register', {errors});
+            }
+        } catch (err) {
+            console.error(err.message);
+        }
+
     }
 }
 module.exports = {
